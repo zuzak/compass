@@ -37,6 +37,7 @@ foreach ($rawdata as $item) {
 }
 
 if (isset($foo)) {
+$data["Hitler"] = array(1,9);
 $data["Obama 2012"] = array(6,6);
 $data["Romney 2012"] = array(7,6.5);
 $data["Labour 2010"] = array(4,8);

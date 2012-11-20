@@ -12,6 +12,10 @@ if (isset($_GET["size"])){
 } else {
 	$imgwidth = 400;
 }
+$multip = 1;
+if (isset($_GET["mult"])){
+	$multip = $_GET["mult"];
+}
 $textsize = 8;
 if (isset($_GET["rescale"])){
 	$textsize *= ($imgwidth/$defaultwidth);
@@ -55,8 +59,9 @@ foreach ($rawdata as $item) {
 }
 
 $offset = array($bounds["left"]*0.5,$bounds["bottom"]*0.5);
+
 foreach($data as $name => $thingy){
-	$data2[$name] = array($thingy[0]-$offset[0],$thingy[1]-$offset[1]);
+	$data2[$name] = array(($thingy[0]-$offset[0])*$multip,($thingy[1]-$offset[1])*$multip);
 }
 $data["top left"] = array($bounds["left"],$bounds["top"]);
 $data["top right"] = array($bounds["right"],$bounds["top"]);
