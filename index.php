@@ -1,5 +1,6 @@
 <?php
-/* built on by code from jelco @ introversion */
+/* built on by code from jelco @ introversion
+   http://zuzak.co.uk/compass                 */
 error_reporting(E_ALL);
 
 $foo = $_GET["parties"];
@@ -43,6 +44,7 @@ $data["Tories 2010"] = array(8,6);
 $data["Lib Dems 2010"] = array(4,-1);
 $data["Plaid 2010"] = array(-3,1);
 $data["Green 2010"] = array(-4,-5);
+$data["BNP 2010"] = array(-1.5,9);
 }
 
 $img = imagecreate($imgwidth, $imgwidth);
