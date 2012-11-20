@@ -22,10 +22,10 @@ $dotdiameter = 4;
 $font = './font.ttf';
 
 $bounds = array();
-$bounds["top"] = 0;
-$bounds["bottom"] = 0;
-$bounds["left"] = 0;
-$bounds["right"] = 0;
+$bounds["top"] = -100;
+$bounds["bottom"] = 100;
+$bounds["left"] = 100;
+$bounds["right"] = -100;
 
 $data = array();
 $url = "http://users.aber.ac.uk/dog2/whois/api.php";
@@ -39,13 +39,13 @@ foreach ($rawdata as $item) {
 
       $data[$nam] = array($eco,$soc);
 		
-		if ($eco > $bounds["left"]){
+		if ($eco < $bounds["left"]){
 			$bounds["left"] = $eco;
 		}
 		if ($soc > $bounds["top"]) {
 			$bounds["top"] = $soc;
 		}
-		if ($eco < $bounds["right"]){
+		if ($eco > $bounds["right"]){
 			$bounds["right"] = $eco;
 		}
 		if ($soc < $bounds["bottom"]){
@@ -54,17 +54,14 @@ foreach ($rawdata as $item) {
    }
 }
 
-if (isset($foo)) {
-$data["Hitler"] = array(1,9);
-$data["Obama 2012"] = array(6,6);
-$data["Romney 2012"] = array(7,6.5);
-$data["Labour 2010"] = array(4,8);
-$data["Tories 2010"] = array(8,6);
-$data["Lib Dems 2010"] = array(4,-1);
-$data["Plaid 2010"] = array(-3,1);
-$data["Green 2010"] = array(-4,-5);
-$data["BNP 2010"] = array(1.5,9);
+$offset = array($bounds["left"]*0.5,$bounds["bottom"]*0.5);
+foreach($data as $name => $thingy){
+	$data2[$name] = array($thingy[0]-$offset[0],$thingy[1]-$offset[1]);
 }
+$data["top left"] = array($bounds["left"],$bounds["top"]);
+$data["top right"] = array($bounds["right"],$bounds["top"]);
+$data["bottom left"] = array($bounds["left"],$bounds["bottom"]);
+$data["bottom right"] = array($bounds["right"],$bounds["bottom"]);
 
 $img = imagecreate($imgwidth, $imgwidth);
 
@@ -93,7 +90,7 @@ for($pointer = ($imgwidth / 20); $pointer < $imgwidth; $pointer = ($pointer + ($
    imageline($img, $pointer, 0, $pointer, $imgwidth, $colourgrid);
 }
 
-foreach($data as $key => $value)
+foreach($data2 as $key => $value)
 {
    $x = (($imgwidth / 2) + round($value[0] * ($imgwidth / 20)));
    $y = (($imgwidth / 2) - round($value[1] * ($imgwidth / 20)));
