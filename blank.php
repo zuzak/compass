@@ -21,22 +21,41 @@ if (isset($_GET["rescale"])){
 $dotdiameter = 4;
 $font = './font.ttf';
 
+$bounds = array();
+$bounds["top"] = 0;
+$bounds["bottom"] = 0;
+$bounds["left"] = 0;
+$bounds["right"] = 0;
+
 $data = array();
 $url = "http://users.aber.ac.uk/dog2/whois/api.php";
 $rawdata = file_get_contents($url);
 $rawdata = json_decode($rawdata);
 foreach ($rawdata as $item) {
    if ($item->Economic <> "" && $item->Social <> "") {
-        $eco = $item->Economic;
-        $soc = $item->Social;
-        $nam = $item->Nick;
-//        print $eco.$soc.$nam;
-        $data[$nam] = array($eco,$soc);
-//      array_push($data,$nam,array($eco,$soc));
+      $eco = $item->Economic;
+		$soc = $item->Social;
+      $nam = $item->Nick;
+
+      $data[$nam] = array($eco,$soc);
+		
+		if ($eco > $bounds["left"]){
+			$bounds["left"] = $eco;
+		}
+		if ($soc > $bounds["top"]) {
+			$bounds["top"] = $soc;
+		}
+		if ($eco < $bounds["right"]){
+			$bounds["right"] = $eco;
+		}
+		if ($soc < $bounds["bottom"]){
+			$bounds["bottom"] = $soc;
+		}
    }
 }
 
 if (isset($foo)) {
+$data["Hitler"] = array(1,9);
 $data["Obama 2012"] = array(6,6);
 $data["Romney 2012"] = array(7,6.5);
 $data["Labour 2010"] = array(4,8);
